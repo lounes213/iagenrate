@@ -25,7 +25,7 @@ export async function POST(req: Request) {
 
   // If there are no headers, error out
   if (!svix_id || !svix_timestamp || !svix_signature) {
-    return new Response("Error occurred -- no svix headers", {
+    return new Response("Error occured -- no svix headers", {
       status: 400,
     });
   }
@@ -48,7 +48,7 @@ export async function POST(req: Request) {
     }) as WebhookEvent;
   } catch (err) {
     console.error("Error verifying webhook:", err);
-    return new Response("Error occurred", {
+    return new Response("Error occured", {
       status: 400,
     });
   }
@@ -58,7 +58,7 @@ export async function POST(req: Request) {
   const eventType = evt.type;
 
   // CREATE
-  if (eventType == "user.created") {
+  if (eventType === "user.created") {
     const { id, email_addresses, image_url, first_name, last_name, username } = evt.data;
 
     const user = {
@@ -85,7 +85,7 @@ export async function POST(req: Request) {
   }
 
   // UPDATE
-  if (eventType == "user.updated") {
+  if (eventType === "user.updated") {
     const { id, image_url, first_name, last_name, username } = evt.data;
 
     const user = {
@@ -101,7 +101,7 @@ export async function POST(req: Request) {
   }
 
   // DELETE
-  if (eventType == "user.deleted") {
+  if (eventType === "user.deleted") {
     const { id } = evt.data;
 
     const deletedUser = await deleteUser(id!);
